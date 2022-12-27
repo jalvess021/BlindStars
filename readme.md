@@ -14,4 +14,4 @@
 
 
 
-#### Desenvolvido por João Alves | @jalvess021 |
+#### Desenvolvido por João Alves (@jalvess021).
