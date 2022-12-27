@@ -8,8 +8,9 @@ body{
     height: 100vh;
     width: 100vw;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    background: linear-gradient(-90deg, rgb(175, 175, 175), rgb(97, 97, 97), rgb(31, 31, 31));
 }
 
 .container-stars{
@@ -17,11 +18,14 @@ body{
     background-image: url(../img/bg-stars.png);
     background-repeat: no-repeat;
     background-size: cover;
-    height: 100%;
-    width: 100%;
+    height: 500px;
+    width: 80%;
     min-height: 400px;
     min-width: 230px;
-
+    border: 1px solid black;
+    overflow: hidden;
+    border-radius: 50px;
+    
 }
 
 .info-game{
@@ -34,17 +38,60 @@ opacity: 0.5;
 margin-top: 15px;
 }
 
-#plane{
+
+
+.div-plane::after{
+    content: "";
     position: absolute;
-    height: 200px;
-    width: 360px;
+    height: 3px;
+    width: 10px;
+    left: 100px;
+    top: calc(20% + 45px);
+    background-color: rgb(255, 102, 0);
 }
 
 
+
+#plane{
+    position: absolute;
+    top: 20%; /*20, 40, 60*/
+    height: 5.8rem;
+    width: 6.5rem;
+    /*animation: plane-animation-slide 1.9s linear infinite;*/
+    filter: contrast(120%) brightness(130%);
+}
+
 #rocket{
     position: absolute;
-    height: 90px;
-    width: 60px;
-    rotate: -90deg;
-    right: 10px;
+    margin-top: 19px;
+    top: 20%;
+    height: 3.5rem;
+    width: 5.5rem;
+    right: 0;
+    animation: rocket-animation-slide 7s linear infinite;
+    
+}
+
+@keyframes rocket-animation-slide{
+    from{
+        right: -5.5rem;
+    }
+
+    to{
+        right: 100%;
+    }
+}
+
+@keyframes plane-animation-slide {
+    0% {
+        top: 20%;
+    }
+    
+    50% {
+        top: 40%;
+    }
+
+    100%{
+        top: 20%;
+    }
 }
