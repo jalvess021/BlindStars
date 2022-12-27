@@ -6,7 +6,9 @@
 
 - Não deixe com que os "Bad Rockets" cheguem perto de sua nave.
 
-- Mova sua nave (Plane) para cima e para baixo utilizando as teclas "W" e "S" respectivamente, para realizar o desvio e a destruição dos "Bad Rockets".
+- Mova sua nave (Plane) para cima e para baixo utilizando as teclas "W" e "S" respectivamente, para realizar o desvio.
+
+- Pressione o botão direito do mouse para disparar e destruir os "Bad Rockets".
 
 - Conforme o tempo for passando, o jogo ficará mais dinâmico, tornando a dificuldade maior.
 
