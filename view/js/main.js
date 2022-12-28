@@ -53,7 +53,7 @@ function gameStart() {
                 imgRocket.src = "view/img/rocket.png";
                 
                 imgRocket.animate([ //configurando a animação
-                        { right: '-5.5rem' },
+                        { right: '-3rem' },
                         { right: '100%' }
                       ], {
                         duration: difficulty, //padrao 1800
@@ -104,14 +104,13 @@ function gameStart() {
                                    
                 switch (key) {
                         case "w":
-                                console.log(currentTop)
                                 if (currentTop >= 199) {
                                         currentTop = currentTop - 100;
                                         Plane.style.top = +currentTop+"px";
                                 }
                                 break;
                         case "s":
-                                if (currentTop <= 400) {
+                                if (currentTop >= 99 ) {
                                         currentTop = currentTop + 100;
                                         Plane.style.top = +currentTop+"px";
                                 }
