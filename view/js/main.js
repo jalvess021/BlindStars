@@ -123,6 +123,7 @@ function gameStart() {
 
 
 //Corrigir o bug de mudar o Top ao pressionar a tecla
+// foguete 81, 181, 281, 381 de top
 
    
     
