@@ -2,18 +2,19 @@
 
 - Mini jogo feito com as tecnologias HTMLL, CSS e Javascript.
 
-- O principal objetivo do game é sobrevoar o máximo de tempo que conseguir.
-
 - Não deixe com que os "Bad Rockets" cheguem perto de sua nave.
+
+- O principal objetivo do game é destruir o máximo de Foguetes que conseguir.
 
 - Mova sua nave (Plane) para cima e para baixo utilizando as teclas "W" e "S" respectivamente, para realizar o desvio.
 
-- Pressione o botão direito do mouse para disparar e destruir os "Bad Rockets".
+- Clique no botão direito do mouse para disparar e destruir os "Bad Rockets" de maneira semiautomática.
 
 - Conforme o tempo for passando, o jogo ficará mais dinâmico, tornando a dificuldade maior.
 
 - Caso algum foguete encoste em sua nave, você automaticamente perderá o jogo.
 
+- Bom jogo e fique vivo!
 
 
 #### Desenvolvido por João Alves (@jalvess021).
