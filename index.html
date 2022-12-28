@@ -7,16 +7,32 @@
     <link rel="stylesheet" href="view/css/main.css">
     <title>Blind Stars Game </title>
 </head>
-<body >
+<body draggable="false" unselectable="on">
     <main class='container-stars'>
-        <h3 class='info-game'>Blind Star Game: @jalvess021 </h3>
+        <h3 class='info-game'>Created by: <a href="https://github.com/jalvess021">@jalvess021</a></h3>
         <div class="div-plane">
-            <img id='plane' src="view/img/plane.png" alt="plane" draggable="false">
+            <img id='plane' class='plane-move' src="view/img/plane.png" alt="plane" draggable="false">
+            <!--  <div class="fire"></div>-->
         </div>
-        <img id='rocket' src="view/img/rocket.png" alt="rocket" draggable="false">
+        <div class="div-lancer">
+            <img class='lancer' src="view/img/lancer.png" alt="lancer" draggable="false">
+            <img class='lancer' src="view/img/lancer.png" alt="lancer" draggable="false">
+            <img class='lancer' src="view/img/lancer.png" alt="lancer" draggable="false">
+            <img class='lancer' src="view/img/lancer.png" alt="lancer" draggable="false">
+        </div>
+        <div class="div-rocket">
+             <!--<img class='rocket' src="view/img/rocket.png" alt="rocket" draggable="false">-->
+              <img class='rocket rocket-top' src="view/img/rocket.png" alt="rocket" draggable="false">
+              <img class='rocket rocket-mid-top' src="view/img/rocket.png" alt="rocket" draggable="false">
+              <img class='rocket rocket-mid-low' src="view/img/rocket.png" alt="rocket" draggable="false">
+              <img class='rocket rocket-low' src="view/img/rocket.png" alt="rocket" draggable="false">
+        </div>
     </main>
     <section class="message-box">
-
+        <h1>Blind Star Game</h1>
+        <h4 id="play">Play</h4>
+        <h4 id="rules">Learn more</h4>
     </section>
 </body>
+<script src="view/js/main.js"></script>
 </html>
