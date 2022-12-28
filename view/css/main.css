@@ -2,15 +2,83 @@ html, body, *,*:before,*:after {
 margin: 0;
 margin: 0;
 box-sizing: border-box;
+
+-webkit-touch-callout: none;  /* iPhone OS, Safari */
+-webkit-user-select: none;    /* Chrome, Safari 3 */
+-khtml-user-select: none;     /* Safari 2 */
+-moz-user-select: none;       /* Firefox */
+-ms-user-select: none;        /* IE10+ */
+user-select: none;            /* Possível implementação no futuro */
 }
 
 body{
     height: 100vh;
     width: 100vw;
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(-90deg, rgb(175, 175, 175), rgb(97, 97, 97), rgb(31, 31, 31));
+    background-color: rgb(5, 5, 5);
+}
+
+
+.message-box{
+    border-radius: 15px;
+    height: 500px;
+    width: 768px;
+    background-color: rgba(8, 8, 8, 0.795);
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: 0.5s;
+}
+
+.message-box h1{
+    font-size: 40pt;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: rgb(194, 194, 194);
+    text-shadow: rgba(221, 81, 0, 0.836) 2px 2px 6px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.message-box h4{
+    font-size: 20pt;
+    text-transform: uppercase;
+    color: rgb(194, 194, 194);
+    font-weight: bold;
+    font-family: serif;
+}
+
+#play{
+    margin-top: 30px;
+}
+
+#play:hover{
+    transform: scale(1.04);
+    cursor: pointer;
+}
+
+#rules:hover{
+    transform: scale(1.01);
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+#play:hover::before{
+    content: "➤";
+    margin-top: 1px;
+    position: absolute;margin-left: -30px;
+    font-size: 14pt;
+}
+
+#rules:hover::before{
+    content: "➤";
+    margin-top: 1px;
+    position: absolute;margin-left: -30px;
+    font-size: 14pt;
 }
 
 .container-stars{
@@ -19,59 +87,107 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
     height: 500px;
-    width: 80%;
+    width: 768px;
     min-height: 400px;
     min-width: 230px;
     border: 1px solid black;
     overflow: hidden;
-    border-radius: 50px;
+    border-radius: 15px;
+    box-shadow: rgba(255, 255, 255, 0.637) 3px 3px 13px;
     
 }
 
 .info-game{
 color: white;
 font-weight: 400;
-font-size: 12pt;
+font-size: 10pt;
 font-family: fantasy, sans-serif;
 text-align: center;
 opacity: 0.5;
 margin-top: 15px;
 }
 
-
-
-.div-plane::after{
-    content: "";
-    position: absolute;
-    height: 3px;
-    width: 10px;
-    left: 100px;
-    top: calc(20% + 45px);
-    background-color: rgb(255, 102, 0);
+.info-game a{
+ font-weight: 600;
 }
 
+.fire{
+    position: absolute;
+    height: 3px;
+    width: 12px;
+    top: calc(20% + 45px);
+    right: 100%;
+    background-color: rgb(255, 102, 0);
+    animation: fire-animation linear 0.3s;
+}
 
+.div-rocket{
+    position: relative;
+    width: 694px;
+    height: 100%;
+    overflow: hidden;
+}
 
 #plane{
     position: absolute;
-    top: 20%; /*20, 40, 60*/
-    height: 5.8rem;
-    width: 6.5rem;
-    /*animation: plane-animation-slide 1.9s linear infinite;*/
+    height: 4rem;
+    width: 5rem;
     filter: contrast(120%) brightness(130%);
+    transition: 0.15s ease-out;
+    top: 40%;
 }
 
-#rocket{
+.plane-move{
+    animation: plane-animation-slide 5s linear infinite;
+}
+
+.lancer{
+    position: absolute;
+    height: 4rem;
+    width: 4rem;
+    right: 10px;
+}
+
+.lancer:nth-child(1){
+    top: 20%;
+}
+
+.lancer:nth-child(2){
+    top: 40%;
+}
+.lancer:nth-child(3){
+    top: 60%;
+}
+.lancer:nth-child(4){
+    top: 80%;
+}
+
+.rocket{
     position: absolute;
     margin-top: 19px;
-    top: 20%;
-    height: 3.5rem;
-    width: 5.5rem;
-    right: 0;
-    animation: rocket-animation-slide 7s linear infinite;
-    
+    height: 2rem;
+    width: 3rem;
+    right: 100%;
+    /*animation: rocket-animation-slide 7s linear;*/    
 }
 
+
+.rocket-top{
+    top: 62px;
+}
+
+.rocket-mid-top{
+    top: 162px;
+}
+
+.rocket-mid-low{
+    top: 262px;
+}
+
+.rocket-low{
+    top: 362px;
+}
+/*
 @keyframes rocket-animation-slide{
     from{
         right: -5.5rem;
@@ -80,18 +196,35 @@ margin-top: 15px;
     to{
         right: 100%;
     }
-}
+} */
 
 @keyframes plane-animation-slide {
     0% {
         top: 20%;
     }
-    
-    50% {
+
+    20%{
         top: 40%;
     }
 
+    40%{
+        top: 80%;
+    }
+
+    20% {
+        top: 40%;
+    }
     100%{
         top: 20%;
+    }
+}
+
+@keyframes fire-animation{
+    from {
+        left: 75px ;
+    }
+
+    to{
+        left: 100%;
     }
 }
