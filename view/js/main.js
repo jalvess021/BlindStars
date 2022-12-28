@@ -104,13 +104,15 @@ function gameStart() {
                                    
                 switch (key) {
                         case "w":
+                                console.log(currentTop)
                                 if (currentTop >= 199) {
                                         currentTop = currentTop - 100;
                                         Plane.style.top = +currentTop+"px";
                                 }
                                 break;
                         case "s":
-                                if (currentTop >= 99 ) {
+                                console.log(currentTop)
+                                if (currentTop >= 99 && currentTop <= 399) {
                                         currentTop = currentTop + 100;
                                         Plane.style.top = +currentTop+"px";
                                 }
@@ -118,6 +120,9 @@ function gameStart() {
                 }   
     })
    } 
+
+
+//Corrigir o bug de mudar o Top ao pressionar a tecla
 
    
     
