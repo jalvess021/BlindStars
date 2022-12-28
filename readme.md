@@ -8,6 +8,8 @@
 
 - Mova sua nave (Plane) para cima e para baixo utilizando as teclas "W" e "S" respectivamente, para realizar o desvio.
 
+- O game conta com 4 caminhos para o desvio (top, mid-top, mid-low, low).
+
 - Clique no botão direito do mouse para disparar e destruir os "Bad Rockets" de maneira semiautomática.
 
 - Conforme o tempo for passando, o jogo ficará mais dinâmico, tornando a dificuldade maior.
