@@ -4,19 +4,46 @@ const Plane = document.getElementById("plane");
 const divRocket = document.querySelector(".div-rocket");
 const msgBox = document.querySelector(".message-box");
 const play = document.getElementById("play");
+const shot = document.getElementById("shot");
 
+// Função para iniciar o game
 play.addEventListener("click", () => {
         gameStart();
-        clearRockets();
-        onFire();
+       // startRockets();
+        //clearRockets();
+        //onFire();
         changePlane();
+
+       oiss()
 });
 
-      
 
-                        
+function oiss() {
+        const r = document.getElementById("rocketteste");
+        const f = document.getElementById("fireteste");
+
+        const rr = r.offsetLeft;
+        const ff = f.offsetLeft;
+
+        const rrr = r.offsetTop
+        const fff = f.offsetTop
+        
+                console.log(rr+ " " +ff)
+                console.log(rrr+ " "+fff)
+        
+}
+
 // Função para iniciar o game
 function gameStart() {
+        msgBox.style.opacity = "0";
+        setTimeout(() => {
+                msgBox.style.display = "none";   
+                Plane.classList.remove("plane-move");
+        }, 650);
+}
+                        
+// Função para iniciar o lançamento dos foguetes
+function startRockets() {
         var velocity = "";
         setInterval(() => {
                 setInterval(() => {
@@ -33,12 +60,6 @@ function gameStart() {
 
                 randomPlaceRockets(velocity);
         }, 250);
-        
-        msgBox.style.opacity = "0";
-        setTimeout(() => {
-                msgBox.style.display = "none";   
-                Plane.classList.remove("plane-move");
-        }, 650);
 }
 
         // Função para gerar foguetes de forma aleatória
@@ -69,13 +90,12 @@ function gameStart() {
        function clearRockets() { 
                         setInterval(() => {
                                 let Rockets = document.querySelectorAll(".rocket"); //Seleciona todos os foguetes
-                                        for (let i = 0; i < Rockets.length; i++) { //Encontrando cada ocorrência de foguete
-                                                const eachRockets = Rockets[i];
-                                                positionRockets = eachRockets.offsetLeft; //Verifica a posição em relação a esquerda
+                                Rockets.forEach(eachRockets => {
+                                        positionRockets = eachRockets.offsetLeft; //Verifica a posição em relação a esquerda
                                         if (positionRockets <= -48) {
                                                 eachRockets.parentNode.removeChild(eachRockets);
                                         }
-                                        }
+                                });
                         }, 20);
        }  
 
@@ -90,6 +110,8 @@ function gameStart() {
                                 topFire = currentTop + 30;
                                 newFire.style.top = topFire+"px";
                                 divPlane.appendChild(newFire); //Adiciona o elemento criado no html
+                                shot.currentTime = 0.008;
+                                shot.play();
                                 
                         }
                  });
@@ -98,33 +120,83 @@ function gameStart() {
 
     //Funcao para movimentar a nave
    function changePlane() {
+
+        let sleepTop = false;
+        let sleepBottom = false;
+
         document.addEventListener("keydown", function(e) {
                 let key = e.key;
                 let currentTop = Plane.offsetTop;
-                                   
+                        
+                const changeTop = (key == "w" || key == "ArrowUp");
+                if (changeTop) {
+                        if (currentTop >= 199) {
+
+                                currentTop = currentTop - 100;
+                                Plane.style.top = +currentTop+"px";
+                                console.log(currentTop)
+                                sleepTop = true;
+                                setTimeout(() => {
+                                       sleepTop = false; 
+                                }, 1000);
+                        }
+                }
+                
+                const changeBottom = (key == "s" || key == "ArrowDown");
+                if (changeBottom) {
+                        console.log("sas");
+                        if (currentTop >= 99 && currentTop <= 399) {
+                                currentTop = currentTop + 100;
+                                Plane.style.top = +currentTop+"px";
+                                sleepBottom = true;
+                                setTimeout(() => {
+                                       sleepBottom = false; 
+                                }, 1000);
+                        }
+                }
+                /*          
                 switch (key) {
                         case "w":
-                                console.log(currentTop)
-                                if (currentTop >= 199) {
-                                        currentTop = currentTop - 100;
-                                        Plane.style.top = +currentTop+"px";
-                                }
+                                
                                 break;
                         case "s":
                                 console.log(currentTop)
                                 if (currentTop >= 99 && currentTop <= 399) {
                                         currentTop = currentTop + 100;
                                         Plane.style.top = +currentTop+"px";
+                                        
                                 }
                                 break;
-                }   
+                }   */
     })
+        setInterval(() => {
+                while (sleepTop || sleepBottom) {
+                        return false;     
+                } 
+        }, 20);
+        
    } 
+  
+   function destroyRocket() {
+        setInterval(() => {
+                let Rockets = document.querySelectorAll(".rocket"); //Seleciona todos os foguetes
+                let Fires = document.querySelectorAll(".fire");
+                Rockets.forEach(eachRockets => {
+                        Fires.forEach(eachFires => {
 
+                                //Verifica a posição em relação a esquerda
+                                positionRocketsLeft = eachRockets.offsetLeft; 
+                                positionFiresLeft = eachFires.offsetLeft;
+
+                                //Verifica a posição e relação ao topo
+                                positionFiresTop = eachFires.offsetTop;
+                                positionRocketsTop = eachRockets.offsetTop
+                                
+                        });
+                });
+        }, 0);
+        
+   }
 
 //Corrigir o bug de mudar o Top ao pressionar a tecla
 // foguete 81, 181, 281, 381 de top
-
-   
-    
-    

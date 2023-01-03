@@ -120,6 +120,14 @@ margin-top: 15px;
     background-color: rgb(255, 102, 0);
     animation: fire-animation linear 0.3s;
 }
+#fireteste{
+    right: 50%;
+    top: calc(40% + 30px);
+}
+
+#rocketteste{
+    right: 38.2%;
+}
 
 .div-rocket{
     position: relative;
