@@ -6,7 +6,7 @@
 
 - O principal objetivo do game é destruir o máximo de Foguetes que conseguir.
 
-- Mova sua nave (Plane) para cima e para baixo utilizando as teclas "W" e "S" respectivamente, para realizar o desvio.
+- Mova sua nave (Plane) para cima e para baixo utilizando as teclas ["W" ou "ArrowUp"] e ["S" ou "ArrowDown"] respectivamente, para realizar o desvio.
 
 - O game conta com 4 caminhos para o desvio (top, mid-top, mid-low, low).
 

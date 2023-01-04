@@ -81,6 +81,11 @@ body{
     font-size: 14pt;
 }
 
+#learnMore {
+ text-decoration: none;
+ color: rgb(194, 194, 194);
+}
+
 .container-stars{
     position: relative;
     background-image: url(../img/bg-stars.png);
