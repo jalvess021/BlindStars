@@ -122,11 +122,12 @@ margin-top: 15px;
 }
 #fireteste{
     right: 50%;
-    top: calc(40% + 30px);
+    top: calc(80% + 30px);
 }
 
 #rocketteste{
-    right: 38.2%;
+    right: 94%;
+    top: 45.4%;
 }
 
 .div-rocket{
@@ -142,6 +143,7 @@ margin-top: 15px;
     width: 5rem;
     filter: contrast(120%) brightness(130%);
     transition: 0.15s ease-out;
+    top: 60%;
 }
 
 .plane-move{
