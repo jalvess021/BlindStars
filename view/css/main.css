@@ -142,7 +142,6 @@ margin-top: 15px;
     width: 5rem;
     filter: contrast(120%) brightness(130%);
     transition: 0.15s ease-out;
-    top: 40%;
 }
 
 .plane-move{

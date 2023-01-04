@@ -8,11 +8,20 @@ const shot = document.getElementById("shot");
 
 // Função para iniciar o game
 play.addEventListener("click", () => {
+        
+        //Muda a posição inicial do foguete
+        let planePosition = ["99px", "199px", "299px", "399px"]; //20%, 40%, 60%, 80%
+        let planePositionRandom = planePosition[Math.floor(Math.random() * 4)]; 
+        Plane.style.top = planePositionRandom;
+
         gameStart();
        // startRockets();
         //clearRockets();
         //onFire();
-        changePlane();
+        //destroyRocket();
+        changePlane();   
+    
+        
 
        oiss()
 });
@@ -28,8 +37,8 @@ function oiss() {
         const rrr = r.offsetTop
         const fff = f.offsetTop
         
-                console.log(rr+ " " +ff)
-                console.log(rrr+ " "+fff)
+                console.log(rr+ "= foguete lado && tiro lado =" +ff)
+                console.log(rrr+ "= foguete topo && tiro topo = "+fff)
         
 }
 
@@ -112,7 +121,6 @@ function startRockets() {
                                 divPlane.appendChild(newFire); //Adiciona o elemento criado no html
                                 shot.currentTime = 0.008;
                                 shot.play();
-                                
                         }
                  });
        }
@@ -120,83 +128,69 @@ function startRockets() {
 
     //Funcao para movimentar a nave
    function changePlane() {
-
-        let sleepTop = false;
-        let sleepBottom = false;
-
+        let sleepMove = false; //Guarda a informação do delay para movimentar a nave novamente
         document.addEventListener("keydown", function(e) {
-                let key = e.key;
-                let currentTop = Plane.offsetTop;
-                        
-                const changeTop = (key == "w" || key == "ArrowUp");
-                if (changeTop) {
-                        if (currentTop >= 199) {
+                let key = e.key; //Captar o clique
+                let currentTop = Plane.offsetTop; // Verificar a posição em relação ao topo
 
+                //realiza a movimentação para cima
+                const changeTop = (key == "w" || key == "ArrowUp"); 
+                if (changeTop) {
+                        if ((currentTop == 199 || currentTop == 299 || currentTop == 399) && !sleepMove) {
+                                sleepMove = true;   
                                 currentTop = currentTop - 100;
-                                Plane.style.top = +currentTop+"px";
-                                console.log(currentTop)
-                                sleepTop = true;
+                                const newTop = (Plane.style.top = +currentTop+"px"); 
+                                //console.log(newTop);
                                 setTimeout(() => {
-                                       sleepTop = false; 
-                                }, 1000);
+                                sleepMove = false; 
+                                }, 100); //Delay de 200ms para realizar nova movimentacao
                         }
                 }
-                
-                const changeBottom = (key == "s" || key == "ArrowDown");
-                if (changeBottom) {
-                        console.log("sas");
-                        if (currentTop >= 99 && currentTop <= 399) {
+                //realiza a movimentação para baixo
+                const changeBottom = (key == "s" || key == "ArrowDown"); 
+                if (changeBottom ) {
+                        if ((currentTop == 99 || currentTop == 199 || currentTop == 299) && !sleepMove) {
+
+                                sleepMove = true;   
                                 currentTop = currentTop + 100;
-                                Plane.style.top = +currentTop+"px";
-                                sleepBottom = true;
+                                const newBottom = (Plane.style.top = +currentTop+"px");
+                                //console.log(newBottom);
                                 setTimeout(() => {
-                                       sleepBottom = false; 
-                                }, 1000);
+                                sleepMove = false;
+                                }, 100); //Delay de 200ms para realizar nova movimentacao
                         }
                 }
-                /*          
-                switch (key) {
-                        case "w":
-                                
-                                break;
-                        case "s":
-                                console.log(currentTop)
-                                if (currentTop >= 99 && currentTop <= 399) {
-                                        currentTop = currentTop + 100;
-                                        Plane.style.top = +currentTop+"px";
-                                        
-                                }
-                                break;
-                }   */
-    })
-        setInterval(() => {
-                while (sleepTop || sleepBottom) {
-                        return false;     
-                } 
-        }, 20);
-        
+        })
    } 
   
+   //Função para destruir os foguetes com o disparo
    function destroyRocket() {
-        setInterval(() => {
+       
                 let Rockets = document.querySelectorAll(".rocket"); //Seleciona todos os foguetes
                 let Fires = document.querySelectorAll(".fire");
-                Rockets.forEach(eachRockets => {
-                        Fires.forEach(eachFires => {
-
+                
+                Fires.forEach(eachFires => {
+                        Rockets.forEach(eachRockets => {
                                 //Verifica a posição em relação a esquerda
                                 positionRocketsLeft = eachRockets.offsetLeft; 
                                 positionFiresLeft = eachFires.offsetLeft;
 
+                                limit = (positionRocketsLeft - positionFiresLeft) //Ponto de contato com o tiro e o foguete (Limite 10)
+
+                                
+                                console.log("ssdsd" +limit)
                                 //Verifica a posição e relação ao topo
                                 positionFiresTop = eachFires.offsetTop;
-                                positionRocketsTop = eachRockets.offsetTop
+                                positionRocketsTop = eachRockets.offsetTop;
                                 
+                                if (positionFiresTop == 229 && positionRocketsTop == 181 && limit <= 10) {
+                                        eachRockets.parentNode.removeChild(eachRockets);
+                                        eachFires.parentNode.removeChild(eachFires);
+                                }
                         });
-                });
-        }, 0);
+                });     
+      
         
    }
-
 //Corrigir o bug de mudar o Top ao pressionar a tecla
 // foguete 81, 181, 281, 381 de top
