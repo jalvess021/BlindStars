@@ -58,7 +58,6 @@ body{
 
 #play:hover{
     transform: scale(1.04);
-    cursor: pointer;
 }
 
 #rules:hover{
@@ -102,6 +101,19 @@ body{
     
 }
 
+.container-stars, .message-box{
+    cursor: crosshair;
+}
+
+.score{
+ background-color: red;
+ /*teste*/
+ position: absolute;
+ width: 100%;
+ text-align: end;
+ padding-right: 15px;
+}
+
 .info-game{
 color: white;
 font-weight: 400;
@@ -127,12 +139,11 @@ margin-top: 15px;
 }
 #fireteste{
     right: 50%;
-    top: calc(80% + 30px);
+    top: calc(60% + 30px);
 }
 
 #rocketteste{
-    right: 94%;
-    top: 45.4%;
+    right: 10%;
 }
 
 .div-rocket{
@@ -147,7 +158,7 @@ margin-top: 15px;
     height: 4rem;
     width: 5rem;
     filter: contrast(120%) brightness(130%);
-    transition: 0.15s ease-out;
+    transition: 0.15s;
     top: 60%;
 }
 

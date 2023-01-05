@@ -23,6 +23,7 @@ play.addEventListener("click", () => {
         destroyRocket()
         changePlane();   
         looseGame();
+        oiss();
 });
 
 function restartGame() {
@@ -67,22 +68,26 @@ function closeBoxPlay() {
 // Função para iniciar o lançamento dos foguetes
 function startRockets() {
         var velocity = "";
-        setInterval(() => {
-                if (!Loose) {
-                        setInterval(() => {
-                                if (velocity == "") {
-                                        velocity = 2000;
-                                }
-                                        newVelocity = velocity - 0.5; 
-                                if (newVelocity <= 500) {
-                                        velocity = 500;
-                                } else{ 
-                                        velocity = newVelocity;
-                                }
-                        }, 2000);
-        
-                        randomPlaceRockets(velocity);
-                }
+
+       var verifyStartRockets = setInterval(() => {
+                        if (!Loose) {
+                              var verifyVelocity =  setInterval(() => {
+                                        if (velocity == "") {
+                                                velocity = 2000;
+                                        }
+                                                newVelocity = velocity - 0.5; 
+                                        if (newVelocity <= 500) {
+                                                velocity = 500;
+                                        } else{ 
+                                                velocity = newVelocity;
+                                        }
+                                }, 2000);
+                
+                                randomPlaceRockets(velocity);
+                        } else if (Loose) {
+                                clearInterval(verifyVelocity);
+                                clearInterval(verifyStartRockets);
+                        }
         }, 250);
 }
 
@@ -111,7 +116,7 @@ function startRockets() {
 
        //Funcao para excluir os foguetes que ultrapassaram o campo de visão
        function clearRockets() { 
-                        setInterval(() => {
+                      var  verifyClear = setInterval(() => {
                                 if (!Loose) {
                                         let Rockets = document.querySelectorAll(".rocket"); //Seleciona todos os foguetes
                                         Rockets.forEach(eachRockets => {
@@ -120,24 +125,31 @@ function startRockets() {
                                                         eachRockets.parentNode.removeChild(eachRockets);
                                                 }
                                         });
+                                }else if (Loose){
+                                        clearInterval(verifyClear);
                                 }
                         }, 20);
        }  
 
        //Função para disparar
        function onFire() {
+                let sleepFire = false;
                 document.addEventListener("mousedown", function(e){
-                        if (!Loose) {
+                        if (!Loose && !sleepFire) {
                                 const onMouse = e.buttons; 
                                 let currentTop = Plane.offsetTop;
                                 if (onMouse == 1 && (currentTop == 99 || currentTop == 199 || currentTop == 299 || currentTop == 399)) {
+                                        sleepFire = true;
                                         const newFire = document.createElement("div");
                                         newFire.classList.add("fire");
                                         topFire = currentTop + 30;
                                         newFire.style.top = topFire+"px";
                                         divPlane.appendChild(newFire); //Adiciona o elemento criado no html
                                         shot.currentTime = 0.008;
-                                        shot.play();    
+                                        shot.play();   
+                                        setTimeout(() => {
+                                              sleepFire = false;  
+                                        }, 150); 
                                 }
                         }
                  });
@@ -163,7 +175,7 @@ function startRockets() {
                                         //console.log(newTop);
                                         setTimeout(() => {
                                         sleepMove = false; 
-                                        }, 100); //Delay de 200ms para realizar nova movimentacao
+                                        }, 100); //Delay de 100ms para realizar nova movimentacao
                                 }
                         }
                         //realiza a movimentação para baixo
@@ -177,7 +189,7 @@ function startRockets() {
                                         //console.log(newBottom);
                                         setTimeout(() => {
                                         sleepMove = false;
-                                        }, 100); //Delay de 200ms para realizar nova movimentacao
+                                        }, 100); //Delay de 100ms para realizar nova movimentacao
                                 }
                         }
                 }
@@ -186,7 +198,7 @@ function startRockets() {
   
    //Função para destruir os foguetes com o disparo
    function destroyRocket() {
-        setInterval(() => {
+       var verifyLooseDestroy = setInterval(() => {
                 if (!Loose) {
                         let Rockets = document.querySelectorAll(".rocket"); //Seleciona todos os foguetes
                         let Fires = document.querySelectorAll(".fire");
@@ -202,7 +214,7 @@ function startRockets() {
 
                                         ableDestroy = (positionRocketsLeft >= 80 && positionRocketsLeft <= 577 ); //Verifica a distancia minima de respaw para ser destruido
                                         //Destroi no mid-top
-                                        if (positionShotTop == 139 && positionRocketsTop == 81 && ableDestroy) {
+                                        if (positionShotTop == 129 && positionRocketsTop == 81 && ableDestroy) {
                                                 limit = (positionRocketsLeft - positionShotLeft);
                                                 if (limit <= 10) {      
                                                         eachRockets.parentNode.removeChild(eachRockets);
@@ -238,7 +250,9 @@ function startRockets() {
                                         } 
                                 });
                         })
-                }   
+                } else if (Loose){
+                        clearInterval(verifyLooseDestroy);
+                }
         }, 0);
    }
 
@@ -250,7 +264,7 @@ function startRockets() {
         */
         
         if (!Loose) {
-                setInterval(() => {
+               var verifyLoose =  setInterval(() => {
 
                         let currentPlaneTop = Plane.offsetTop;
                         let Rockets = document.querySelectorAll(".rocket"); //Seleciona todos os foguetes
@@ -262,8 +276,34 @@ function startRockets() {
         
                                 let limitLeft = (currentRocketLeft <= 75); 
         
+                                //Verificacao no top
+                                if (currentPlaneTop == 99 && limitLeft && currentRocketTop == 81 && !Loose) {
+                                        Plane.src = "view/img/explosao.gif";
+                                        setTimeout(() => {
+                                                Plane.parentNode.removeChild(Plane);   
+                                        }, 200);
+                                        Loose = true;
+                                }
+
+                                //Verificacao no mid-top
+                                if (currentPlaneTop == 199 && limitLeft && currentRocketTop == 181 && !Loose) {
+                                        Plane.src = "view/img/explosao.gif";
+                                        setTimeout(() => {
+                                                Plane.parentNode.removeChild(Plane);   
+                                        }, 200);
+                                        Loose = true;
+                                }
+
                                 //Verificacao no mid-low
-                                if (currentPlaneTop == 299 && limitLeft && (currentRocketTop >= 245 && currentPlaneTop <= 353) && !Loose) {
+                                if (currentPlaneTop == 299 && limitLeft && currentRocketTop == 281 && !Loose) {
+                                        Plane.src = "view/img/explosao.gif";
+                                        setTimeout(() => {
+                                                Plane.parentNode.removeChild(Plane);   
+                                        }, 200);
+                                        Loose = true;
+                                }
+                                //Verificacao no low
+                                if (currentPlaneTop == 399 && limitLeft && currentRocketTop == 381 && !Loose) {
                                         Plane.src = "view/img/explosao.gif";
                                         setTimeout(() => {
                                                 Plane.parentNode.removeChild(Plane);   
@@ -271,7 +311,11 @@ function startRockets() {
                                         Loose = true;
                                 }
                         })
+                        if (Loose) {
+                                clearInterval(verifyLoose);
+                        }
                 }, 20);
+                
                 
         }
 }       
