@@ -1,4 +1,4 @@
-# Blind Stars Game - <a href="[https//:](https://jalvess021.github.io/BlindStars/)" target="_blank">JOGAR</a>
+> #  [Blind Stars Game](https://jalvess021.github.io/BlindStars/)
 
 - Mini jogo feito com as tecnologias HTMLL, CSS e Javascript.
 
@@ -17,8 +17,5 @@
 - Conforme o tempo for passando, o jogo ficará mais dinâmico, tornando a dificuldade maior.
 
 - Caso algum foguete encoste em sua nave, você automaticamente perderá o jogo.
-
-- Bom jogo e fique vivo!
-
 
 ## Desenvolvido por João Alves (@jalvess021).
