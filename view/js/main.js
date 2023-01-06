@@ -9,12 +9,14 @@ const Plane = document.getElementById("plane");
 const divRocket = document.querySelector(".div-rocket");
 const play = document.getElementById("play");
 const restart = document.getElementById("restart");
+const quit = document.getElementById("quit");
 const kills = document.getElementById("kills");
 const sec = document.getElementById("sec");
 const min = document.getElementById("min");
 const hour = document.getElementById("hour");
 const killText = document.getElementById("killText");
 const timeText = document.getElementById("timeText");
+const spanScore = document.getElementById("span-score");
 
 //Pré configuração de som-
 const shotSound = document.getElementById("shotSound");
@@ -24,29 +26,36 @@ const killSound = document.getElementById("killSound");
 const looseSound = document.getElementById("looseSound");
         looseSound.volume = 0.2;
 
-        var Loose = false;
+        var Loose = false; //verifica se perdeu
 
         var totalKills;
         var totalTime;
-
         var score = []; //Grava o score (kills, time)
 
-//Ocultar algumas áreas quando o jogo nao estiver rolando
-function removeDisplay() {
-        killsArea.style.display = "none";
-        scoreArea.style.display = "none";
-        timeArea.style.display = "none"; 
-} removeDisplay();
-//Função para aparecer areas ocultas quando o jogo estiver rolando
-function setDisplay() {
-        scoreArea.style.display = "flex";
-        killsArea.style.display = "flex";
-        timeArea.style.display = "";
-}
+        //Ocultar algumas áreas quando o jogo nao estiver rolando
+        function removeDisplay() {
+                killsArea.style.display = "none";
+                scoreArea.style.display = "none";
+                timeArea.style.display = "none"; 
+        } removeDisplay();
+        //Função para aparecer areas ocultas quando o jogo estiver rolando
+        function setDisplay() {
+                scoreArea.style.display = "flex";
+                killsArea.style.display = "flex";
+                timeArea.style.display = "";
+        }
 
+        var altura = window.screen.height;
+        var largura = window.screen.width;
+        if (altura >= 500 && largura >= 768) {
+                play.addEventListener("click", ()=>{startGame()}); //Iniciar o game
+                restart.addEventListener("click", ()=>{restartGame()}); //Reiniciar o game
+                quit.addEventListener("click", ()=>{location.reload();}); //Sair
+        }else{
+                play.style.opacity = "0.2";
+                confirm("Para proporcionar a melhor performance para o usuário, um dispositivo com medida IGUAL ou SUPERIOR à 768x500, é requerido para jogar o BLIND STAR GAME.\n\nTo provide the best performance for the user, a device measuring EQUAL or GREATER than 768x500 is required to play the BLIND STAR GAME.")
+        }
 
-play.addEventListener("click", ()=>{startGame()});
-restart.addEventListener("click", ()=>{restartGame()});
 
 // Função para iniciar o game
 function startGame() {
@@ -63,33 +72,25 @@ function startGame() {
 }
 // Função para reiniciar o game
 function restartGame() {
-
         Loose = false;
-
         //reseta o contador
         hour.innerHTML = "00";
         min.innerHTML = "00"
         sec.innerHTML = "00";
-
         //Reseta o contador de kills
         kills.innerHTML = "0";
-
         restartBox.style.opacity = "0";
         setTimeout(() => {
                 restartBox.style.display = "none";   
         }, 650);
-        
-        recreatePlane();
+        recreatePlane("on");
         setDisplay();
         startRockets(); 
         clearArea();
-        onFire();
-        destroyRocket()
-        changePlane();   
+        destroyRocket();
         looseGame();
         counterTime();
 }
-
 // Função para iniciar o game
 function closeBoxPlay() {
         initBox.style.opacity = "0";
@@ -104,6 +105,29 @@ function randomPlanePosition() {
         let planePosition = ["99px", "199px", "299px", "399px"]; //20%, 40%, 60%, 80%
         let planePositionRandom = planePosition[Math.floor(Math.random() * 4)]; 
         Plane.style.top = planePositionRandom;  
+}
+
+// Função para gerar foguetes de forma aleatória
+function randomPlaceRockets(difficulty) {  
+        if (!Loose) {
+                let rocketPosition = ["rocket-top", "rocket-mid-top", "rocket-mid-low", "rocket-low"];
+                let rocketPositionRandom = rocketPosition[Math.floor(Math.random() * 4)];        
+                
+                //Criando o elemento
+                const imgRocket = document.createElement("img");
+                imgRocket.classList.add("rocket", rocketPositionRandom);
+                imgRocket.src = "view/img/rocket.png";
+                
+                imgRocket.animate([ //configurando a animação
+                        { right: '-3rem' },
+                        { right: '100%' }
+                ], {
+                        duration: difficulty, //padrao 1800
+                        easing: 'linear'
+                });
+                
+                divRocket.appendChild(imgRocket); //Adiciona o elemento criado no html
+        }  
 }
                         
 // Função para iniciar o lançamento dos foguetes
@@ -131,53 +155,7 @@ function startRockets() {
                         }
         }, 250);
 }
-
-        // Função para gerar foguetes de forma aleatória
-       function randomPlaceRockets(difficulty) {  
-                if (!Loose) {
-                        let rocketPosition = ["rocket-top", "rocket-mid-top", "rocket-mid-low", "rocket-low"];
-                        let rocketPositionRandom = rocketPosition[Math.floor(Math.random() * 4)];        
-                        
-                        //Criando o elemento
-                        const imgRocket = document.createElement("img");
-                        imgRocket.classList.add("rocket", rocketPositionRandom);
-                        imgRocket.src = "view/img/rocket.png";
-                        
-                        imgRocket.animate([ //configurando a animação
-                                { right: '-3rem' },
-                                { right: '100%' }
-                        ], {
-                                duration: difficulty, //padrao 1800
-                                easing: 'linear'
-                        });
-                        
-                        divRocket.appendChild(imgRocket); //Adiciona o elemento criado no html
-                }  
-       }
-
-       //Funcao para excluir os foguetes e os disparos que ultrapassaram o campo de visão
-       function clearArea() { 
-                      var  verifyClear = setInterval(() => {
-                                if (!Loose) {
-                                        let Rockets = document.querySelectorAll(".rocket"); //Seleciona todos os foguetes
-                                        Rockets.forEach(eachRockets => {
-                                                positionRockets = eachRockets.offsetLeft; //Verifica a posição em relação a esquerda
-                                                if (positionRockets <= -48) {
-                                                        eachRockets.parentNode.removeChild(eachRockets);
-                                                }
-                                        });
-                                        let Fires = document.querySelectorAll(".fire");
-                                        Fires.forEach(eachFires =>{
-                                        positionFiresLeft = eachFires.offsetLeft;
-                                                if (positionFiresLeft >= 577) {
-                                                        eachFires.parentNode.removeChild(eachFires);
-                                                }
-                                        })
-                                }else if (Loose){
-                                        clearInterval(verifyClear);
-                                }
-                        }, 20);
-       }  
+ 
 
        //Função para disparar
        function onFire() {
@@ -193,7 +171,7 @@ function startRockets() {
                                         topFire = currentTop + 30;
                                         newFire.style.top = topFire+"px";
                                         divPlane.appendChild(newFire); //Adiciona o elemento criado no html
-                                        shotSound.currentTime = 0.008;
+                                        shotSound.currentTime = 0.001;
                                         shotSound.play();   
                                         setTimeout(() => {
                                               sleepFire = false;  
@@ -241,18 +219,44 @@ function startRockets() {
         })
    } 
 
-    //Contar o número de kills
-    function counterKills() {
-        killSound.play();
-        let numKills = parseInt(kills.textContent);
-        totalKills = numKills + 1;
-        kills.innerHTML = totalKills;
-        kills.classList.add("change-kill")
-        setTimeout(() => {
-              kills.classList.remove("change-kill")  
-        }, 300);
-    }
+    
+
+    //Funcao para excluir os foguetes e os disparos que ultrapassaram o campo de visão
+    function clearArea() { 
+        var  verifyClear = setInterval(() => {
+                if (!Loose) {
+                        let Rockets = document.querySelectorAll(".rocket"); //Seleciona todos os foguetes
+                        Rockets.forEach(eachRockets => {
+                                positionRockets = eachRockets.offsetLeft; //Verifica a posição em relação a esquerda
+                                if (positionRockets <= -48) {
+                                        eachRockets.parentNode.removeChild(eachRockets);
+                                }
+                        });
+                        let Fires = document.querySelectorAll(".fire");
+                        Fires.forEach(eachFires =>{
+                        positionFiresLeft = eachFires.offsetLeft;
+                                if (positionFiresLeft >= 577) {
+                                        eachFires.parentNode.removeChild(eachFires);
+                                }
+                        })
+                }else if (Loose){
+                        clearInterval(verifyClear);
+                }
+        }, 20);
+} 
   
+        //Contar o número de kills
+        function counterKills() {
+                killSound.play();
+                let numKills = parseInt(kills.textContent);
+                totalKills = numKills + 1;
+                kills.innerHTML = totalKills;
+                kills.classList.add("change-kill")
+                setTimeout(() => {
+                kills.classList.remove("change-kill")  
+                }, 300);
+        }
+
    //Função para destruir os foguetes com o disparo
    function destroyRocket() {
 
@@ -338,7 +342,7 @@ function startRockets() {
                                         looseSound.play();
                                         Plane.src = "view/img/explosao.gif";
                                         setTimeout(() => {
-                                                Plane.parentNode.removeChild(Plane);   
+                                                recreatePlane("off");    
                                         }, 200);
                                         Loose = true;
                                 }
@@ -348,7 +352,7 @@ function startRockets() {
                                         looseSound.play();
                                         Plane.src = "view/img/explosao.gif";
                                         setTimeout(() => {
-                                                Plane.parentNode.removeChild(Plane);   
+                                                recreatePlane("off");   
                                         }, 200);
                                         Loose = true;
                                 }
@@ -358,7 +362,7 @@ function startRockets() {
                                         looseSound.play();
                                         Plane.src = "view/img/explosao.gif";
                                         setTimeout(() => {
-                                                Plane.parentNode.removeChild(Plane);   
+                                                recreatePlane("off"); 
                                         }, 200);
                                         Loose = true;
                                 }
@@ -367,7 +371,7 @@ function startRockets() {
                                         looseSound.play();
                                         Plane.src = "view/img/explosao.gif";
                                         setTimeout(() => {
-                                                Plane.parentNode.removeChild(Plane);   
+                                                recreatePlane("off"); 
                                         }, 200);
                                         Loose = true;
                                 }
@@ -380,10 +384,13 @@ function startRockets() {
                                 }, 500);
                                 
                                 setTimeout(() => {
+                                        let Rockets = document.querySelectorAll(".rocket"); //Seleciona todos os foguetes
+                                        Rockets.forEach(eachRockets => {
+                                                eachRockets.parentNode.removeChild(eachRockets);//Remove todos os foguetes
+                                        });
                                         restartBox.style.display = "flex";  
                                 }, 1000);
-                                
-                                
+
                                 setTimeout(() => {
                                         function changeScore() {
 
@@ -402,7 +409,7 @@ function startRockets() {
                                                 }
                                                 killText.innerHTML = score.kills;
                                                 timeText.innerHTML = score.time;
-                                               
+                                                spanScore.innerHTML = score.kills+"<small>Kills</small> <small>in</small> "+score.time;
                                         }
                                         changeScore();
                                 }, 10); //Timeout para da o tempo de carregar o last score
@@ -412,7 +419,6 @@ function startRockets() {
 }       
 
 function counterTime() {
-
         var timeOn = setInterval(() => {
                 numberSec = parseInt(sec.textContent);
                 numberMin = parseInt(min.textContent);
@@ -445,23 +451,21 @@ function counterTime() {
                                 }
                         }
         }, 1000);
-
         var verifyLooseTime = setInterval(() => {
                 if (Loose) {
                         clearInterval(timeOn); 
                         totalTime = hour.textContent+":"+min.textContent+":"+sec.textContent;
                         clearInterval(verifyLooseTime);
                 }
-                    
         }, 0);
 }
 
 //Recriando a nave destruida
-function recreatePlane() {
-        const newPlane = document.createElement("img");
-        newPlane.setAttribute("id", "plane");
-        newPlane.setAttribute("draggable", "false");
-        newPlane.setAttribute("alt", "plane");
-        newPlane.src = "view/img/plane.png";
-        divPlane.appendChild(newPlane); //Adiciona o elemento criado no html
+function recreatePlane(toggle) {
+        if (toggle == "on") {
+                Plane.src = "view/img/plane.png";
+                Plane.style.display = "block";
+        }else if(toggle == "off"){
+                Plane.style.display = "none";
+        }
 }
