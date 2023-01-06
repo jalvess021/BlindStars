@@ -1,6 +1,8 @@
-### Blind Stars
+# Blind Stars Game - <a href="[https//:](https://jalvess021.github.io/BlindStars/)" target="_blank">JOGAR</a>
 
 - Mini jogo feito com as tecnologias HTMLL, CSS e Javascript.
+
+- Para proporcionar a melhor performance para o usuário, um dispositivo com medida IGUAL ou SUPERIOR à 768x500, é requerido para jogar o BLIND STAR GAME.
 
 - Não deixe com que os "Bad Rockets" cheguem perto de sua nave.
 
@@ -19,4 +21,4 @@
 - Bom jogo e fique vivo!
 
 
-#### Desenvolvido por João Alves (@jalvess021).
+## Desenvolvido por João Alves (@jalvess021).
