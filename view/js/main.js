@@ -192,7 +192,7 @@ function startRockets() {
                         let currentTop = Plane.offsetTop; // Verificar a posição em relação ao topo
 
                         //realiza a movimentação para cima
-                        const changeTop = (key == "w" || key == "ArrowUp"); 
+                        const changeTop = (key == "w" || key == "W" || key == "ArrowUp"); 
                         if (changeTop) {
                                 if ((currentTop == 199 || currentTop == 299 || currentTop == 399) && !sleepMove) {
                                         sleepMove = true;   
@@ -204,7 +204,7 @@ function startRockets() {
                                 }
                         }
                         //realiza a movimentação para baixo
-                        const changeBottom = (key == "s" || key == "ArrowDown"); 
+                        const changeBottom = (key == "s" || key == "S" || key == "ArrowDown"); 
                         if (changeBottom ) {
                                 if ((currentTop == 99 || currentTop == 199 || currentTop == 299) && !sleepMove) {
                                         sleepMove = true;   
