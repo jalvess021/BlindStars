@@ -1,4 +1,4 @@
-> #  [Blind Stars Game](https://jalvess021.github.io/BlindStars/)
+> #  [Blind Stars Game - CLIQUE P/ JOGAR](https://jalvess021.github.io/BlindStars/)
 
 - Mini jogo feito com as tecnologias HTMLL, CSS e Javascript.
 
